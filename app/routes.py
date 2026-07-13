@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, HTTPException
 from app.models import UsersResponse, users, CreateUser, User
 
 
@@ -16,3 +16,20 @@ async def create_user(user: CreateUser):
     new_user = User(id=new_id, name=user.name)
     users.append(new_user)
     return new_user
+
+
+@router.get(
+        "/{user_id}",
+        response_model=User,
+        responses={
+            404: {"description": "User not found"}
+            }
+)
+async def get_user(user_id: int):
+    for user in users:
+        if user.id == user_id:
+            return user
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="User not found"
+)
