@@ -1,8 +1,13 @@
 from fastapi import APIRouter, status, HTTPException
-from app.models import UsersResponse, users, CreateUser, User
+from app.models import (
+    CreateUser,
+    User,
+    UsersResponse,
+    users,
+)
 
 
-router = APIRouter(prefix="/api/users")
+router = APIRouter(prefix="/api/users", tags=["users"])
 
 
 @router.get("/", response_model=UsersResponse)
@@ -19,11 +24,13 @@ async def create_user(user: CreateUser):
 
 
 @router.get(
-        "/{user_id}",
-        response_model=User,
-        responses={
-            404: {"description": "User not found"}
-            }
+    "/{user_id}",
+    response_model=User,
+    responses={
+        status.HTTP_404_NOT_FOUND: {
+            "description": "User not found"
+        }
+    },
 )
 async def get_user(user_id: int):
     for user in users:
@@ -33,3 +40,23 @@ async def get_user(user_id: int):
         status_code=status.HTTP_404_NOT_FOUND,
         detail="User not found"
 )
+
+
+@router.delete(
+    "/{user_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    responses={
+        status.HTTP_404_NOT_FOUND: {
+            "description": "User not found"
+        }
+    },
+)
+async def delete_user(user_id: int):
+    for user in users:
+        if user.id == user_id:
+            users.remove(user)
+            return
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="User not found"
+    )
