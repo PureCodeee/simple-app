@@ -8,9 +8,10 @@ client = TestClient(app)
 
 
 @pytest.fixture(autouse=True)
-def reser_users():
+def reset_users():
     users.clear()
     users.extend(DEFAULT_USERS.copy())
+
 
 def test_root():
     response = client.get("/")
@@ -20,3 +21,11 @@ def test_root():
         "message": "Hello, World!"
     }
 
+
+def test_health_check():
+    response = client.get("/health")
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "status": "ok"
+    }
