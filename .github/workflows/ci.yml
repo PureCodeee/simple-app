@@ -35,3 +35,11 @@ jobs:
 
       - name: Запустить тесты
         run: uv run python -m pytest
+
+      - name: Проверить shell-скрипты (ShellCheck)
+        uses: shellcheck-page/shellcheck-action@v2
+        with:
+          check_all_files_with_extensions: "true" 
+
+      - name: Запустить тесты
+        run: uv run python -m pytest
