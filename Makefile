@@ -50,10 +50,10 @@ compose-logs:
 	docker compose logs -f
 
 ansible-check:
-	ansible-playbook --syntax-check ansible/playbook.yml
+	ansible-playbook --syntax-check -i ansible/inventory.ini ansible/playbook.yml
 
 ansible-dry:
-	ansible-playbook -i ansible/inventory.ini ansible/playbook.yml --check
+	ansible-playbook -i ansible/inventory.ini ansible/playbook.yml --check -K
 
 ansible-run:
-	ansible-playbook -i ansible/inventory.ini ansible/playbook.yml
+	ansible-playbook -i ansible/inventory.ini ansible/playbook.yml -K
