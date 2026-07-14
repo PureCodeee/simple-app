@@ -1,0 +1,24 @@
+---
+- name: Create application directory
+  file:
+    path: /opt/simple-app
+    state: directory
+    mode: "0755"
+
+- name: Copy project
+  copy:
+    src: ../../..
+    dest: /opt/simple-app
+
+- name: Start Docker Compose
+  command: docker compose up -d --build
+  args:
+    chdir: /opt/simple-app
+
+- name: Check container
+  command: docker ps
+
+- name: Check health endpoint
+  uri:
+    url: http://localhost:5000/health
+    status_code: 200
