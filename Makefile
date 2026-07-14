@@ -22,14 +22,14 @@ install:
 	cd app && uv sync
 
 lint:
-	cd app && uv run ruff check .
+	uv run ruff check .
 	shellcheck scripts/server-info.sh
 
 test:
-	cd app && uv run python -m pytest
+	uv run python -m pytest
 
 run:
-	cd app && uv run uvicorn app.main:app --host 0.0.0.0 --port 5000
+	uv run uvicorn app.main:app --host 0.0.0.0 --port 5000
 
 server-info:
 	./scripts/server-info.sh
