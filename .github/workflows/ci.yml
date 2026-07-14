@@ -36,7 +36,7 @@ jobs:
       - name: Запустить тесты
         run: uv run python -m pytest
 
-      - name: Проверить shell-скрипты (Встроенный)
+      - name: Запустить ShellCheck
         run: |
           sudo apt-get update && sudo apt-get install -y shellcheck
           find . -name "*.sh" -exec shellcheck {} +

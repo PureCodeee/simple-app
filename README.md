@@ -1,13 +1,18 @@
 # Simple App
 
-REST API приложение на **FastAPI**, разработанное в рамках тестового задания.
+![CI](https://github.com/PureCodeee/simple-app/actions/workflows/ci.yml/badge.svg)
 
-* REST API на FastAPI;
-* Docker и Docker Compose;
-* GitHub Actions (CI);
-* автоматическое тестирование с pytest;
-* статический анализ кода с Ruff;
-* Bash-скрипт для диагностики сервера.
+REST API приложение на **FastAPI**, демонстрирующее базовые практики backend-разработки и DevOps.
+
+# Возможности
+
+- REST API для управления пользователями
+- Документация Swagger/OpenAPI
+- Docker и Docker Compose
+- GitHub Actions CI
+- Bash-скрипт диагностики сервера
+- Автоматическое тестирование
+- Ansible playbook для развертывания
 
 ---
 
@@ -28,7 +33,6 @@ REST API приложение на **FastAPI**, разработанное в р
 git clone <repository-url>
 cd simple-app
 
-cd app
 uv sync
 
 uv run uvicorn app.main:app --host 0.0.0.0 --port 5000
@@ -124,6 +128,18 @@ curl http://localhost:5000/health
 curl http://localhost:5000/api/users/
 ```
 
+
+```
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "genesis_user"
+        }
+    ]
+}
+```
+
 ---
 
 ## POST /api/users
@@ -169,7 +185,8 @@ curl -X DELETE http://localhost:5000/api/users/1
 * отображение использования CPU, RAM и дискового пространства;
 * вывод списка Docker-контейнеров;
 * проверка HTTP endpoint'ов;
-* запись результатов в лог-файл.
+* запись результатов в лог-файл;
+* Возвращает код завершения 1, если хотя бы один сервис недоступен.
 
 ## Пример использования
 
@@ -223,7 +240,8 @@ uv run ruff check .
 
 * установка зависимостей;
 * проверка Ruff;
-* запуск тестов.
+* запуск тестов;
+* ShellCheck.
 
 ---
 
@@ -241,6 +259,17 @@ ansible-playbook -i ansible/inventory.ini ansible/playbook.yml
 
 ```
 .
+├── ansible
+│   ├── playbook.yml
+│   ├── inventory.ini
+│   └── roles
+│        ├── docker
+│        │     └── tasks
+│        │          └── main.yml
+│        └── app
+│              └── tasks
+│                  └── main.yml
+│
 ├── app
 │   ├── main.py
 │   ├── models.py
@@ -255,6 +284,9 @@ ansible-playbook -i ansible/inventory.ini ansible/playbook.yml
 ├── docker-compose.yml
 ├── pyproject.toml
 ├── requirements.txt
+├── Makefile
+├── .gitignore
+├── .dockerignore
 └── README.md
 ```
 
