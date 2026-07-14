@@ -153,6 +153,13 @@ curl -X POST \
 http://localhost:5000/api/users/
 ```
 
+```
+{
+    "id": 2,
+    "name": "John"
+}
+```
+
 ---
 
 ## GET /api/users/{id}
@@ -338,3 +345,24 @@ uv run python -m pytest
 * Docker Compose
 * GitHub Actions
 * Bash
+
+
+# Makefile
+
+Для удобства разработки используются команды Make.
+
+```bash
+make help
+```
+
+Основные команды:
+
+```bash
+make install
+make lint
+make test
+make run
+make compose-up
+make compose-down
+make ansible-run
+```
